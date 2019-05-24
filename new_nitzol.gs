@@ -30,15 +30,42 @@ function conect_volunteers(task_profesion){
    Logger.log(ss.getName());
    var sheet = ss.getActiveSheet();
    var search_string = task_profesion
-   var textFinder = sheet.createTextFinder(search_string)
+   var textFinder = sheet.createTextFinder(search_string);
+   var cells = textFinder.findAll();
+  
+ 
+  Logger.log('cells');
+  Logger.log(cells);
+  Logger.log('cells.length');
+  Logger.log(cells.length);
+  
+  
+  var rows = cells.map(function(cell, i) {
+    Logger.log("'i is ' + i");
+    Logger.log('i is "%s"',i);
+    var row = cell.getRow();
+    var currentRow = sheet.getRange(row,2);
+    var currentVolunteer = currentRow.getValues();
+      
+    //Logger.log('the next volunteer with  profession of "%s" is "%s"',search_string,search_row)
+    
+    // Logger.log('the volunteer details are: "%s"',currentVolunteer);
+    return currentVolunteer;
+  });
+  
+  Logger.log('rows');
+  Logger.log(rows);
    
-   var search_row = textFinder.findNext().getRow()
-   
-   var currentRow = sheet.getRange(search_row,2) 
-   var current_volunteer = currentRow.getValues()
-   
-  Logger.log('the next volunteer with  profession of "%s" is "%s"',search_string,search_row)
-  Logger.log('the volunteer details are: "%s"',current_volunteer)
+//   while (textFinder) {
+//      var search_row = textFinder.findNext().getRow()
+//   
+//      var currentRow = sheet.getRange(search_row,2) 
+//      var current_volunteer = currentRow.getValues()
+//      
+//      Logger.log('the next volunteer with  profession of "%s" is "%s"',search_string,search_row)
+//      Logger.log('the volunteer details are: "%s"',current_volunteer)
+//     textFinder = sheet.createTextFinder(search_string);
+//   }
 }
  
 
@@ -55,9 +82,13 @@ function delete_old_responses(){
    
   Logger.clear()
   
+  Logger.log('AAAAAA');
+  
   //var head_manneger = {name:'Gibor', email: 'Gibori.shoa@gmail.com'}
   var form = FormApp.getActiveForm();
   var formResponses = form.getResponses();
+   
+   Logger.log('BBBBBBB');
    
   Logger.log('number of all Giborim %s"',formResponses.length);
     
